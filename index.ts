@@ -19,6 +19,7 @@ app.get(
 try {
     app.listen(port, (): void => {
         console.log(`Connected successfully on port ${port}`);
+        console.log("Running on http://localhost:3000/")
     });
 } catch (error) {
   if (error instanceof Error) {
