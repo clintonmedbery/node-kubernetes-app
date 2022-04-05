@@ -28,7 +28,7 @@ Connect by going to:
 `docker push clintomed/hello-kubernetes:0.1.0`
 
 
-## Deploying to Kubernetes
+## Deploying to Kubernetes using vanilla Kubernetes
 
 For these instructions I used [kind](https://kind.sigs.k8s.io/). Make sure you have pushed the Docker image.
 
@@ -38,3 +38,19 @@ For these instructions I used [kind](https://kind.sigs.k8s.io/). Make sure you h
 1. Run `k apply -f kubernetes-yaml/services/service-definition.yaml`
 1. Run `kubectl port-forward service/myapp-service 3003:3000` to expose port 3000 on your node to port 3003 on your host.
 1. Go to [http://localhost:3003/](http://localhost:3003/)
+
+## Deploying to Kubernetes using Helm
+
+#### Setting up helm release
+
+1. Create a new folder called helm
+1. Initialize helm using `helm create node-kubernetes`
+1. In the `deployment.yaml` file in the `templates` folder, change the `containerPort` to `3000`.
+1. In the `Chart.yaml` change the the `appVersion` to the version of the docker container you want to deploy, for example `0.1.0`.
+1. In the `values.yaml` file, change the `image.repository` to `clintomed/hello-kubernetes`. Change `service.type` to `NodePort` and `service.port` to `3000`. Change `ingress.enabled` to `true`.
+
+[How to make a Helm chart in 10 minutes](https://opensource.com/article/20/5/helm-charts)
+
+#### Deploying the new helm release
+
+
